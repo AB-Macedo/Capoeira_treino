@@ -1,17 +1,6 @@
-const CACHE = 'treino-corda-v2';
-const ASSETS = ['./', 'index.html', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png'];
-self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS))));
-self.addEventListener('activate', event => event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith('treino-corda-') && key !== CACHE).map(key => caches.delete(key))))));
-self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET' || new URL(event.request.url).origin !== self.location.origin) return;
-  event.respondWith(fetch(event.request).then(async response => {
-    if (response.ok) { const cache = await caches.open(CACHE); await cache.put(event.request, response.clone()); }
-    return response;
-  }).catch(async () => {
-    const cache = await caches.open(CACHE);
-    const cached = await cache.match(event.request);
-    if (cached) return cached;
-    if (event.request.mode === 'navigate') { const page = await cache.match('index.html'); if (page) return page; }
-    return Response.error();
-  }));
-});
+const CACHE='treino-corda-v3';
+const ASSETS=["./","index.html","base.css","app.css","core.js","plan.js","content.js","app.js","manifest.webmanifest","icon.svg","icon-192.png","icon-512.png","illustrations/bike.svg","illustrations/carry.svg","illustrations/floorpress.svg","illustrations/ginga.svg","illustrations/hinge.svg","illustrations/journal.svg","illustrations/lunge.svg","illustrations/mobility.svg","illustrations/press.svg","illustrations/pushup.svg","illustrations/row.svg","illustrations/sideplank.svg","illustrations/singlehinge.svg","illustrations/squat.svg","illustrations/supervised.svg"];
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
+self.addEventListener('message',e=>{if(e.data?.type==='SKIP_WAITING')self.skipWaiting()});
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('treino-corda-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',e=>{const url=new URL(e.request.url);if(e.request.method!=='GET'||url.origin!==self.location.origin)return;e.respondWith(caches.open(CACHE).then(async cache=>{const cached=await cache.match(e.request,{ignoreSearch:true});if(cached)return cached;try{return await fetch(e.request)}catch{if(e.request.mode==='navigate')return (await cache.match('index.html'))||Response.error();return Response.error()}}))});
