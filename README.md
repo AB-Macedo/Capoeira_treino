@@ -96,3 +96,7 @@ O projeto é estático, sem dependências em produção. `plan.js` guarda o plan
 - `node --test tests/core.test.cjs`: datas, migração e estoque de anilhas.
 - `node tests/browser.cjs`: precisa de Playwright no ambiente e Microsoft Edge. Testa histórico, notas, cargas, modos, backup, musicalidade, offline e atualização. Use `NODE_PATH` se o Playwright estiver em uma instalação compartilhada.
 - `node scripts/build-illustrations.cjs`: regenera os esquemas SVG originais.
+
+### Semana e histórico (versão 3.1)
+
+A aba **Semana** mostra a semana atual de segunda a domingo, com as datas, objetivos e listas dos modos normal, leve e descanso. A consulta não grava nem modifica o histórico. “Abrir registro desta data” leva à sessão salva daquele dia. O calendário mensal de histórico permanece acessível exclusivamente pelo botão da data no topo.

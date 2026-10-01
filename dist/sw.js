@@ -1,4 +1,4 @@
-const CACHE='treino-corda-v3';
+const CACHE='treino-corda-v3-1';
 const ASSETS=["./","index.html","base.css","app.css","core.js","plan.js","content.js","app.js","manifest.webmanifest","icon.svg","icon-192.png","icon-512.png","illustrations/bike.svg","illustrations/carry.svg","illustrations/floorpress.svg","illustrations/ginga.svg","illustrations/hinge.svg","illustrations/journal.svg","illustrations/lunge.svg","illustrations/mobility.svg","illustrations/press.svg","illustrations/pushup.svg","illustrations/row.svg","illustrations/sideplank.svg","illustrations/singlehinge.svg","illustrations/squat.svg","illustrations/supervised.svg"];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
 self.addEventListener('message',e=>{if(e.data?.type==='SKIP_WAITING')self.skipWaiting()});
